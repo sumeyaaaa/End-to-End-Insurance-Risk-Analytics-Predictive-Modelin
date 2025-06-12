@@ -1,9 +1,8 @@
 
 #
-# Ignore everything in data folder...
 data/*
-# ...except .dvc files
-!data/**/*.dvc
+!data/*.dvc
+
 #data/
 # Byte-compiled / optimized / DLL files
 __pycache__/
