@@ -1,0 +1,30 @@
+
+#
+# Ignore everything in data folder...
+data/*
+# ...except .dvc files
+!data/**/*.dvc
+#data/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Data files (don’t track raw or output data)
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.json
+*.db
+*.sqlite
+*.log
