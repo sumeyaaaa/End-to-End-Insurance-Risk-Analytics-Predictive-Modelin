@@ -1,10 +1,7 @@
 
 #
 
-#!data/*.dvc
-data
-data/
-.data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -21,6 +18,7 @@ ENV/
 
 # Data files (don’t track raw or output data)
 *.csv
+*.txt
 *.tsv
 *.xlsx
 *.xls
