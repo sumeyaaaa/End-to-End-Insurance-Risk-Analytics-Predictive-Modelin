@@ -41,3 +41,22 @@ def plot_loss_ratio_by_category(df, category, claims_col='TotalClaims', premium_
     plt.grid(axis='x', linestyle='--', alpha=0.6)
     plt.tight_layout()
     plt.show()
+# --- New modular function to analyze vehicle model loss ratios ---
+def analyze_loss_ratio_for_models(df, model_list, model_col='Model', claims_col='TotalClaims', premium_col='TotalPremium'):
+    """
+    Filters the dataframe to the selected model list, calculates and plots the loss ratio.
+
+    Parameters:
+    - df: Full DataFrame
+    - model_list: List of model names to filter
+    - model_col: Column name for vehicle model (default: 'Model')
+    - claims_col: Column name for total claims (default: 'TotalClaims')
+    - premium_col: Column name for total premium (default: 'TotalPremium')
+    """
+    filtered_df = df[df[model_col].isin(model_list)].copy()
+
+    print(f"✅ Overall Loss Ratio for selected models: {calculate_overall_loss_ratio(filtered_df, claims_col, premium_col)}\n")
+    print("🔍 Loss Ratio by Model:")
+    print(calculate_loss_ratio_by_category(filtered_df, model_col, claims_col, premium_col))
+
+    plot_loss_ratio_by_category(filtered_df, model_col, claims_col, premium_col)
