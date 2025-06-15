@@ -1,38 +1,95 @@
 # End-to-End-Insurance-Risk-Analytics-Predictive-Modeling
 Analyze car insurance data to identify low-risk segments, perform A/B hypothesis testing, and build predictive models for claim severity and premium optimization. Includes EDA, statistical testing, machine learning, SHAP explainability, and DVC-based version control
 
+## ✅ Task 1: Git, GitHub & Exploratory Data Analysis (EDA)
+
+### Goals:
+- Set up a version-controlled repo with a proper Git branching strategy.
+- Understand and summarize key insurance features using EDA.
+- Provide statistical insights and visual summaries for actionable decision-making.
+
+### Methodology:
+- 📁 Created a GitHub repository with a dedicated `task-1` branch and frequent, descriptive commits.
+- 🧪 Used `pandas`, `matplotlib`, and `seaborn` to perform:
+  - Descriptive statistics on features like `TotalClaims`, `TotalPremium`, `CustomValueEstimate`.
+  - Histograms, bar charts, and box plots to examine distributions and detect outliers.
+- 📊 Investigated:
+  - Loss Ratio (`TotalClaims / TotalPremium`) segmented by `Province`, `VehicleType`, and `Gender`.
+  - Temporal patterns over 18 months and auto make/model effects on claims.
+  - Detected skewness, extreme outliers, and claim seasonality.
+- ✅ Produced 3 high-impact, visually creative plots summarizing these insights.
+
 ---
 
-## ✅ Task 1: Data Cleaning & EDA
+## ✅ Task 2: Reproducible Data Pipeline with DVC
+## 📦 Data Version Control (DVC)
 
-**Goals**:
-- Remove inconsistencies in date and numeric fields
-- Handle missing values in key vehicle and claim columns
-- Explore claim distribution, claim frequency, and top-risk segments
+- Project uses DVC to version raw and processed datasets.
+- Tracked files:
+  - `data/raw/insurance_cleaned.csv`
+  - `data/clean/insurance_cleaned_final.csv`
+- Data is excluded from Git using `.gitignore` and stored in a local DVC cache.
 
-**Methods Used**:
-- Histograms & boxplots to visualize outliers
-- Group-by aggregations on transaction date
-- Missing value % computation
-- Identification of top/bottom claim models
-
-📝 See: `notebooks/task1_eda.ipynb`
+### Goals:
+- Set up **DVC** to version-control datasets and ensure full auditability.
+- Configure a local remote storage system for backing up datasets.
+## Setup DVC and pull data
+!pip install dvc
+dvc init
+dvc remote add -d localstorage `C:\Users\ABC\Desktop\10Acadamy\week 3\End-to-End-Insurance-Risk-Analytics-Predictive-Modelin\data\dvc_file`
+dvc add data/raw/insurance_cleaned.csv
+dvc add data/clean/insurance_cleaned_final.csv
+git add insurance_cleaned.csv.dvc insurance_cleaned_final.csv.dvc .gitignore
+git commit -m "Restart project cleanly: Removed DVC cache and restored source files"
+dvc push
+### Methodology:
+- 🛠️ Installed and initialized `dvc` within the project.
+- 🗂️ Created a DVC remote at `C:\Users\ABC\Desktop\10Acadamy\week 3\End-to-End-Insurance-Risk-Analytics-Predictive-Modelin\data\dvc_file`.
+- 📥 Tracked datasets via `dvc add`, pushed them with `dvc push`, and committed `.dvc` files to Git.
+- 🔁 This ensured that anyone cloning the repo could reproduce the entire workflow via `dvc pull`.
 
 ---
 
-## ✅ Task 2: DVC Integration & Modularization
+## ✅ Task 3: Hypothesis Testing – Validating Risk Drivers
 
-**Goals**:
-- Version-control cleaned datasets with DVC
-- Modularize visualizations and aggregation logic
-- Improve project reproducibility and structure
+### Goals:
+- Statistically validate or reject assumptions about segmentation risk factors and margin differences.
+- Guide the future risk segmentation strategy.
 
-**Highlights**:
-- Created `.dvc` metafiles for raw and cleaned data
-- Moved EDA plotting logic into `src/visualization.py`
-- Added utility modules like `LossRatio.py` and `temporal_trends.py`
+### Hypotheses Tested:
+1. **H₀: No risk difference across provinces**
+2. **H₀: No risk difference between zip codes**
+3. **H₀: No margin difference across zip codes**
+4. **H₀: No risk difference between Women and Men**
 
-📦 Run `dvc repro` to regenerate the cleaned dataset pipeline if raw files change.
+### Methodology:
+- 📊 Selected key metrics:
+  - **Claim Frequency**: Proportion of policies with at least one claim.
+  - **Claim Severity**: Average claim amount (if a claim occurred).
+  - **Margin**: `TotalPremium - TotalClaims`
+- 🔍 Segmented data using client attributes ensuring comparability.
+- 🧠 Performed:
+  - `t-test` for numerical comparisons (claim severity, margin).
+  - `chi-square` test for categorical proportions (claim frequency).
+- 📈 Analyzed p-values and interpreted:
+  - Significant differences found in Gender and Province-based risk profiles.
+  - Some zip codes had outlier margins and claim behaviors warranting re-segmentation.
+
+---
+
+## ⚙️ CI/CD – GitHub Actions
+
+- Implemented GitHub Actions workflow to validate notebook execution and maintain reproducibility.
+
+---
+
+## 📈 Key Skills Demonstrated
+
+- ✅ Git & GitHub Workflow
+- ✅ EDA and data storytelling
+- ✅ Statistical testing and hypothesis validation
+- ✅ Reproducibility with DVC
+- ✅ Automation with GitHub Actions
 
 ---
 
@@ -63,13 +120,13 @@ End-to-End-Insurance-Risk-Analytics-Predictive-Modelin/
 │ |── .dvc/ # DVC metadata folder
 ├── notebooks/
 │ ├── data_convert_load.ipynb # Initial data loading & conversion
-│ └── task1_eda.ipynb # Exploratory Data Analysis
+│ └── AB_Hypothesis_Testing.ipynb # Exploratory Data Analysis,A/B testing and stastical analysis
 │
 ├── src/
 │ ├── visualization.py # All modular plots
 │ ├── LossRatio.py # Loss Ratio calculation utils
 │ └── temporal_trends.py # Time-based claim analysis
-│
+│ └──stastical_methods.py # Tests
 ├
 ├── .gitignore
 ├── README.md
