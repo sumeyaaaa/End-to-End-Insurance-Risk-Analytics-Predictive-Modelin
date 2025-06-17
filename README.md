@@ -160,8 +160,11 @@ End-to-End-Insurance-Risk-Analytics-Predictive-Modelin/
 │   └── clean/                   # Cleaned/preprocessed datasets
 │   └── .dvc/                    # DVC metadata
 ├── notebooks/
-│   ├── data_convert_load.ipynb             # Initial data loading & transformation
-│   ├── AB_Hypothesis_Testing.ipynb         # Statistical Testing and Risk Segmentation
+  ├──task-1 and 2
+│   ├── data_convert_load.ipynb   
+  ├──task 3          # Initial data loading & transformation
+│   ├── AB_Hypothesis_Testing.ipynb 
+  ├──task 4        # Statistical Testing and Risk Segmentation
 │   └── predicitive_models.ipynb       # choosing features to use in the model
     └── claim_pridiction.ipynb       # Modeling and SHAP Explainability
 ├── src/
